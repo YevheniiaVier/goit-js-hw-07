@@ -6,10 +6,10 @@ const galleryRef = document.querySelector('.gallery');
 const imgMarkup = createGalleryImgMarkup(galleryItems);
 
 galleryRef.insertAdjacentHTML('beforeend', imgMarkup);
-galleryRef.addEventListener('click', onImgGalleryClick);
+galleryRef.addEventListener('click', onImgClick);
 
 function createGalleryImgMarkup(galleryItems) {
-  const markup = galleryItems
+  return galleryItems
     .map(({ preview, original, description }) => {
       return `
     <div class="gallery__item">
@@ -25,13 +25,22 @@ function createGalleryImgMarkup(galleryItems) {
     `;
     })
     .join('');
-  return markup;
 }
 
-// function onImgGalleryClick(evt) {
-//   if (!evt.target.classList.contains('gallery__image')) {
-//     return;
-//   }
-//   console.log(evt.target);
-// }
-// console.log(galleryItems);
+function onImgClick(evt) {
+  evt.preventDefault();
+  if (!evt.target.classList.contains('gallery__image')) {
+    return;
+  }
+  const instance = basicLightbox.create(`
+	<img src = "${evt.target.dataset.source}"width="800" height="600">
+`);
+  instance.show();
+  galleryRef.addEventListener('keydown', evt => {
+    if (evt.code === 'Escape') {
+      instance.close();
+    }
+  });
+  console.log(evt.target);
+}
+console.log(galleryItems);
