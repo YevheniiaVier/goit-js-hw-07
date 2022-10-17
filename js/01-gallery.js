@@ -1,5 +1,4 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
 
 const galleryRef = document.querySelector('.gallery');
 
@@ -28,19 +27,29 @@ function createGalleryImgMarkup(galleryItems) {
 }
 
 function onImgClick(evt) {
-  evt.preventDefault();
   if (!evt.target.classList.contains('gallery__image')) {
     return;
   }
-  const instance = basicLightbox.create(`
-	<img src = "${evt.target.dataset.source}"width="800" height="600">
-`);
-  instance.show();
-  galleryRef.addEventListener('keydown', evt => {
+  evt.preventDefault();
+
+  const onEscPress = evt => {
     if (evt.code === 'Escape') {
       instance.close();
     }
-  });
-  console.log(evt.target);
+  };
+  const instance = basicLightbox.create(
+    `<img src = "${evt.target.dataset.source}"width="800" height="600">`,
+    {
+      onShow: () => {
+        window.addEventListener('keydown', onEscPress);
+      },
+      onClose: () => {
+        window.removeEventListener('keydown', onEscPress);
+      },
+    }
+  );
+
+  instance.show();
 }
+
 console.log(galleryItems);
