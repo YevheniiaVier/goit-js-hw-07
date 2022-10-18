@@ -13,7 +13,7 @@ function createGalleryImgMarkup(galleryItems) {
       <li>
       <div class="gallery">
       <a class="gallery__item" href="${original}">
-  <img class="gallery__image" src="${preview}" alt="" title="${description}"/>
+  <img class="gallery__image" src="${preview}" alt="${description}"/>
 </a>
 </div>
       </li>
@@ -23,6 +23,7 @@ function createGalleryImgMarkup(galleryItems) {
 }
 
 let lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
   captionPosition: 'bottom',
   captionDelay: 250,
 });
