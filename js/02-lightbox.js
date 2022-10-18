@@ -5,7 +5,6 @@ const galleryRef = document.querySelector('.gallery');
 const imgMarkup = createGalleryImgMarkup(galleryItems);
 
 galleryRef.insertAdjacentHTML('beforeend', imgMarkup);
-galleryRef.addEventListener('click', onImgClick);
 
 function createGalleryImgMarkup(galleryItems) {
   return galleryItems
@@ -23,15 +22,9 @@ function createGalleryImgMarkup(galleryItems) {
     .join('');
 }
 
-function onImgClick(evt) {
-  if (!evt.target.classList.contains('gallery__image')) {
-    return;
-  }
-  evt.preventDefault();
-  console.log('click');
-  let lightbox = new SimpleLightbox('.gallery a', {
-    captionPosition: 'bottom',
-    captionDelay: 250,
-  });
-}
+let lightbox = new SimpleLightbox('.gallery a', {
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});
+
 console.log(galleryItems);
